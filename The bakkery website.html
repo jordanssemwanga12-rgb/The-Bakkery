@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Cakes by Jose — Your Home of Cake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=500;700;900&family=Pacifico&family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#5C0E33;
+    --magenta:#C2185B;
+    --blush:#FBE4EC;
+    --cream:#FFF8F5;
+    --rosegold:#C9976B;
+    --ink:#3A1526;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%; height:100%; object-fit:cover; display:block; width:100%;}
+
+  /* ---------- utility ---------- */
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    font-size:.75rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--magenta); font-weight:600; margin-bottom:10px;
+  }
+  .script{font-family:'Pacifico', cursive;}
+  .display{font-family:'Playfair Display', serif;}
+  .btn{
+    display:inline-block; padding:14px 32px; border-radius:999px;
+    font-weight:600; font-size:.95rem; letter-spacing:.02em;
+    cursor:pointer; border:2px solid transparent; transition:.25s ease;
+    text-align: center;
+  }
+  .btn-solid{background:var(--magenta); color:#fff;}
+  .btn-solid:hover{background:var(--plum); transform:translateY(-2px);}
+  .btn-outline{border-color:var(--magenta); color:var(--magenta); background:transparent;}
+  .btn-outline:hover{background:var(--magenta); color:#fff;}
+
+  /* ---------- share button ---------- */
+  .share-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .btn-share {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    background: var(--white);
+    border: 1.5px solid rgba(92,14,51,.15);
+    color: var(--plum);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .btn-share:hover {
+    border-color: var(--magenta);
+    color: var(--magenta);
+    background: var(--blush);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(255,248,245,.95); backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(92,14,51,.08);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px; max-width:1180px; margin:0 auto;
+  }
+  .logo{font-family:'Pacifico', cursive; font-size:1.5rem; color:var(--magenta);}
+  .navlinks{display:flex; gap:32px; font-size:.9rem; font-weight:500;}
+  .navlinks a{position:relative; padding:4px 0;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--magenta); transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .navcta{display:flex; align-items:center; gap:16px;}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer;}
+  .burger span{width:24px; height:2px; background:var(--ink);}
+
+  @media (max-width:820px){
+    .navlinks{
+      position:absolute; top:100%; left:0; right:0; background:var(--cream);
+      flex-direction:column; padding:20px 24px; gap:18px;
+      display:none; border-bottom:1px solid rgba(92,14,51,.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    .navlinks.open{display:flex;}
+    .burger{display:flex;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:150px 24px 90px; position:relative;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(194,24,91,.14), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(201,151,107,.16), transparent 40%);
+  }
+  .hero-grid{
+    max-width:1180px; margin:0 auto; display:grid;
+    grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 5vw, 4.2rem); line-height:1.1; font-weight:900;
+    color:var(--plum); margin-bottom:20px;
+  }
+  .hero h1 span{color:var(--magenta); font-family:'Pacifico',cursive; font-weight:400; display:block; font-size:0.95em; margin-top: 5px;}
+  .hero p{font-size:1.05rem; color:#6b3350; max-width:440px; margin-bottom:32px; line-height:1.7;}
+  .hero-btns{display:flex; gap:16px; flex-wrap:wrap;}
+
+  .hero-visual{position:relative; aspect-ratio:1/1; width: 100%; max-width: 450px; margin: 0 auto;}
+  .hero-plate{
+    position:absolute; inset:0; border-radius:50%;
+    background:conic-gradient(from 200deg, var(--blush), #fff, var(--blush));
+    box-shadow:0 40px 80px -20px rgba(92,14,51,.35);
+  }
+  .hero-photo{
+    position:absolute; inset:8%; border-radius:50%; overflow:hidden;
+    border:6px solid #fff; box-shadow:0 20px 50px -10px rgba(92,14,51,.3);
+    background:linear-gradient(135deg, var(--magenta), var(--rosegold));
+  }
+  .hero-badge{
+    position:absolute; bottom:-2%; left:-2%; background:#fff; border-radius:50%;
+    width:105px; height:105px; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; box-shadow:0 15px 30px -10px rgba(92,14,51,.35);
+    text-align:center; transform:rotate(-8deg); z-index:5;
+  }
+  .hero-badge b{font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--magenta);}
+  .hero-badge small{font-size:.55rem; letter-spacing:.05em; color:var(--plum); text-transform:uppercase;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; text-align:center; gap:40px;}
+    .hero p{margin-left:auto; margin-right:auto;}
+    .hero-btns{justify-content:center;}
+    .hero-visual{max-width:320px;}
+  }
+
+  /* ---------- section heading ---------- */
+  .sec-head{text-align:center; max-width:600px; margin:0 auto 50px;}
+  .sec-head h2{font-size:clamp(1.8rem,3.5vw,2.7rem); color:var(--plum); font-weight:700;}
+  section{padding:80px 0;}
+
+  /* ---------- menu / categories ---------- */
+  .filters{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:44px;
+  }
+  .filter-btn{
+    padding:9px 20px; border-radius:999px; border:1.5px solid rgba(92,14,51,.2);
+    background:#fff; font-size:.85rem; font-weight:500; cursor:pointer; transition:.2s;
+    color:var(--plum);
+  }
+  .filter-btn:hover{border-color:var(--magenta);}
+  .filter-btn.active{background:var(--magenta); border-color:var(--magenta); color:#fff;}
+
+  .menu-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:26px;
+  }
+  .menu-card{
+    background:#fff; border-radius:20px; overflow:hidden;
+    box-shadow:0 10px 30px -15px rgba(92,14,51,.25); transition:transform .3s ease, box-shadow .3s ease;
+    display:none;
+  }
+  .menu-card.show{display:block; animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .menu-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px -15px rgba(92,14,51,.35);}
+  .menu-img{
+    aspect-ratio:4/3; background:linear-gradient(135deg,var(--blush),#fff);
+    display:flex; align-items:center; justify-content:center; color:var(--magenta);
+    font-size:.75rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .menu-img img { width:100%; height:100%; object-fit:cover; }
+  .menu-img .swap-hint{
+    position:absolute; bottom:8px; left:8px; right:8px; font-size:.65rem;
+    background:rgba(255,255,255,0.9); border-radius:8px; padding:4px 8px; color:var(--plum); font-weight:600;
+    opacity: 0; transition: opacity 0.2s ease; pointer-events: none;
+  }
+  .menu-card:hover .swap-hint { opacity: 1; }
+  .menu-body{padding:20px 22px 24px;}
+  .menu-body h3{font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--plum); margin-bottom:6px;}
+  .menu-body p{font-size:.85rem; color:#7a5064; margin-bottom:14px; line-height:1.5;}
+  .menu-foot{display:flex; align-items:center; justify-content:space-between;}
+  .price{font-weight:700; color:var(--magenta);}
+  .order-mini{
+    font-size:.78rem; font-weight:600; color:var(--plum); border-bottom:1.5px solid var(--rosegold);
+    cursor:pointer;
+  }
+
+  /* ---------- gallery / lightbox ---------- */
+  .gallery-grid{
+    columns:4 260px; column-gap:16px;
+  }
+  .gallery-item{
+    break-inside:avoid; margin-bottom:16px; border-radius:16px; overflow:hidden;
+    position:relative; cursor:pointer; background:linear-gradient(160deg,var(--magenta),var(--rosegold));
+    color:#fff; display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:.75rem; min-height:180px;
+  }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-item:nth-child(3n){min-height:230px;}
+  .gallery-item:nth-child(5n){min-height:150px;}
+  .gallery-item .zoom{
+    position:absolute; inset:0; background:rgba(92,14,51,0); transition:.25s;
+    display:flex; align-items:center; justify-content:center; opacity:0; z-index:2;
+  }
+  .gallery-item:hover .zoom{background:rgba(92,14,51,.65); opacity:1;}
+  .zoom span{border:1.5px solid #fff; border-radius:999px; padding:6px 16px; font-size:.75rem; background:rgba(194,24,91,0.4);}
+
+  /* LIGHTBOX FIXED FOR MOBILE DISPLAY */
+  #lightbox{
+    position:fixed; inset:0; background:rgba(58,21,38,.96); z-index:200;
+    display:none; align-items:center; justify-content:center; padding:16px;
+  }
+  #lightbox.open{display:flex;}
+  #lightbox-inner{
+    background:#fff; width:min(540px,100%); max-height:85vh; border-radius:20px;
+    overflow:hidden; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);
+    display:flex; flex-direction:column;
+  }
+  #lightbox-img {
+    width:100%;
+    height:100%;
+    max-height:65vh;
+    object-fit:contain;
+    display:block;
+    background:var(--plum);
+  }
+  #lightbox-text { padding:16px; text-align:center; font-weight:600; color:var(--plum); background:var(--cream); font-size:0.95rem;}
+  #lightbox-close{
+    position:absolute; top:12px; right:16px; color:#fff; font-size:1.8rem; cursor:pointer; z-index:210; text-shadow:0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  /* ---------- custom cake builder (signature) ---------- */
+  .builder{
+    background:var(--plum); border-radius:28px; padding:56px 40px; color:#fff;
+    display:grid; grid-template-columns:.9fr 1.1fr; gap:50px; align-items:center;
+  }
+  .builder-controls h3{font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:22px;}
+  .control-group{margin-bottom:22px;}
+  .control-group label{display:block; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--blush); margin-bottom:10px;}
+  .swatches{display:flex; gap:10px; flex-wrap:wrap;}
+  .swatch{
+    width:38px; height:38px; border-radius:50%; cursor:pointer; border:2px solid transparent;
+    transition:.2s;
+  }
+  .swatch.selected{border-color:#fff; transform:scale(1.15);}
+  .chip-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .chip{
+    padding:8px 16px; border-radius:999px; border:1.5px solid rgba(255,255,255,.35);
+    font-size:.8rem; cursor:pointer; transition:.2s; background:transparent; color:#fff;
+  }
+  .chip.selected{background:#fff; color:var(--plum); border-color:#fff;}
+  .builder-total{
+    margin-top:26px; padding-top:20px; border-top:1px solid rgba(255,255,255,.2);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .builder-total b{font-size:1.5rem; font-family:'Playfair Display',serif;}
+
+  .cake-stage{
+    display:flex; align-items:flex-end; justify-content:center; height:320px; position:relative;
+  }
+  .cake-tier{
+    width:180px; border-radius:10px 10px 4px 4px; transition:.35s ease; position:relative;
+  }
+  .cake-tier.t3{height:60px; width:120px; z-index:3;}
+  .cake-tier.t2{height:70px; width:160px; z-index:2; margin-bottom:-6px;}
+  .cake-tier.t1{height:80px; width:200px; z-index:1; margin-bottom:-6px;}
+  .cake-topper{
+    position:absolute; top:-30px; left:50%; transform:translateX(-50%); font-size:1.6rem;
+    transition:.3s;
+  }
+
+  @media (max-width:860px){
+    .builder{grid-template-columns:1fr; padding:40px 20px;}
+    .cake-stage { height: 260px; margin-top: 20px;}
+  }
+
+  /* ---------- about ---------- */
+  .about{
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .about-photo{
+    aspect-ratio:1; border-radius:24px; background:linear-gradient(160deg,var(--blush),#fff);
+    overflow:hidden; border:2px dashed rgba(194,24,91,.4); position:relative;
+  }
+  .about-text p{color:#6b3350; line-height:1.8; margin-bottom:16px;}
+  .stat-row{display:flex; gap:36px; margin-top:28px;}
+  .stat b{display:block; font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--magenta);}
+  .stat small{font-size:.75rem; color:#8a6376; text-transform:uppercase; letter-spacing:.05em;}
+  @media (max-width:820px){
+    .about{grid-template-columns:1fr; gap:40px;}
+    .stat-row { justify-content: space-between; gap: 10px; }
+  }
+
+  /* ---------- testimonials ---------- */
+  .testi-track{display:flex; gap:22px; overflow-x:auto; padding-bottom:15px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling: touch;}
+  .testi-card{
+    scroll-snap-align:start; min-width:280px; width: 85%; max-width: 360px; background:#fff; border-radius:18px; padding:28px;
+    box-shadow:0 10px 30px -15px rgba(92,14,51,.2); flex-shrink: 0;
+  }
+  .testi-card p{font-style:italic; color:#6b3350; margin-bottom:16px; line-height:1.6;}
+  .testi-name{font-weight:600; color:var(--plum); font-size:.9rem;}
+  .testi-stars{color:var(--rosegold); margin-bottom:10px; letter-spacing:2px;}
+
+  /* ---------- order/contact ---------- */
+  .contact{background:var(--blush);}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px;}
+  .contact-info li{
+    display:flex; gap:14px; margin-bottom:20px; align-items:flex-start; font-size:.95rem; color:var(--ink);
+  }
+  .contact-info .ic{
+    width:36px; height:36px; border-radius:50%; background:var(--magenta); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem;
+  }
+  form{background:#fff; padding:32px; border-radius:20px; box-shadow:0 15px 40px -20px rgba(92,14,51,.3);}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-size:.8rem; font-weight:600; color:var(--plum); margin-bottom:6px;}
+  .field input, .field select, .field textarea{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid rgba(92,14,51,.15);
+    font-family:inherit; font-size:.9rem; background:var(--cream);
+    -webkit-appearance: none;
+  }
+  .field select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%235C0E33' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 10px;
+    padding-right: 30px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--magenta); outline-offset:1px;}
+  @media (max-width:820px){
+    .contact-grid{grid-template-columns:1fr; gap:40px;}
+    form { padding: 20px; }
+  }
+
+  footer{background:var(--plum); color:#f4d9e6; padding:50px 24px 26px;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-bottom:30px;}
+  .foot-logo{font-family:'Pacifico',cursive; font-size:1.6rem; color:#fff; margin-bottom:10px;}
+  .foot-social a{display:inline-block; margin-right:14px; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.3); padding-bottom:2px;}
+  .foot-bottom{text-align:center; font-size:.75rem; color:#d59fb8; border-top:1px solid rgba(255,255,255,.12); padding-top:20px;}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="logo">Cakes by Jose</a>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#builder">Build a Cake</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Order</a></li>
+    </ul>
+    <div class="navcta">
+      <a href="#contact" class="btn btn-solid" style="padding:10px 22px; font-size:.85rem;">Order Now</a>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Namulanda, Entebbe Road</div>
+      <h1>Every cake tells<span>...your home of cake</span></h1>
+      <p>Handmade birthday, wedding and celebration cakes, baked fresh and finished with real buttercream detail. Tell us the occasion — we'll bring the cake.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-solid">Order a Cake</a>
+        <a href="#gallery" class="btn btn-outline">See Our Cakes</a>
+      </div>
+
+      <!-- Native Mobile Share API Integration Button -->
+      <div class="share-container">
+        <button class="btn-share" onclick="shareWebsite()">🔗 Share This Website</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-plate"></div>
+      <div class="hero-photo" id="heroPhotoContainer">
+        <img src="Rosegold.jpg" alt="Signature Cake - Cakes by Jose">
+      </div>
+      <div class="hero-badge">
+        <b>100%</b>
+        <small>Handmade</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">What we make</div>
+      <h2 class="display">Our Menu</h2>
+    </div>
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="birthday">Birthday</button>
+      <button class="filter-btn" data-filter="wedding">Wedding</button>
+      <button class="filter-btn" data-filter="cupcake">Cupcakes</button>
+      <button class="filter-btn" data-filter="anniversary">Anniversary</button>
+      <button class="filter-btn" data-filter="valentine">Valentine's</button>
+      <button class="filter-btn" data-filter="velvet">Velvet</button>
+      <button class="filter-btn" data-filter="bread">Bread</button>
+      <button class="filter-btn" data-filter="cookie">Cookies &amp; Biscuits</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<section id="gallery" style="background:#fff;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Our work</div>
+      <h2 class="display">Cake Gallery</h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<div id="lightbox">
+  <span id="lightbox-close">✕</span>
+  <div id="lightbox-inner">
+    <img id="lightbox-img" src="" alt="Popup Preview">
+    <div id="lightbox-text">Photo</div>
+  </div>
+</div>
+
+<section id="builder">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Design it yourself</div>
+      <h2 class="display">Build Your Cake</h2>
+    </div>
+    <div class="builder reveal">
+      <div class="builder-controls">
+        <h3>Pick your details</h3>
+        <div class="control-group">
+          <label>Icing colour</label>
+          <div class="swatches" id="colorSwatches"></div>
+        </div>
+        <div class="control-group">
+          <label>Number of tiers</label>
+          <div class="chip-row" id="tierChips"></div>
+        </div>
+        <div class="control-group">
+          <label>Topper</label>
+          <div class="chip-row" id="topperChips"></div>
+        </div>
+        <div class="builder-total">
+          <span>Estimated price</span>
+          <b id="totalPrice">UGX 60,000</b>
+        </div>
+        <a href="#contact" class="btn btn-solid" style="margin-top:20px; display:inline-block;" id="builderOrderBtn">Order This Cake</a>
+      </div>
+      <div class="cake-stage" id="cakeStage">
+        <div class="cake-topper" id="cakeTopper">🎂</div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="cake-tier t3" id="tier3"></div>
+          <div class="cake-tier t2" id="tier2"></div>
+          <div class="cake-tier t1" id="tier1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background:#fff;">
+  <div class="wrap about">
+    <div class="about-photo reveal">
+      <img src="Rosegold.jpg" alt="Jose's Bakery Space">
+    </div>
+    <div class="about-text reveal">
+      <div class="eyebrow">Our story</div>
+      <h2 class="display" style="color:var(--plum); font-size:2.2rem; margin-bottom:18px;">Home of Cake</h2>
+      <p>Cakes by Jose started with a simple idea: every celebration deserves a cake made with real care, not shortcuts. From birthdays to weddings, each order is baked fresh and hand-finished in Namulanda.</p>
+      <p>We work closely with every customer to get the flavour, size and design exactly right — because it's your celebration, and your cake should look like it.</p>
+      <div class="stat-row">
+        <div class="stat"><b>500+</b><small>Cakes Baked</small></div>
+        <div class="stat"><b>5★</b><small>Customer Rating</small></div>
+        <div class="stat"><b>10+</b><small>Flavours</small></div>
+      </div>s
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Kind words</div>
+      <h2 class="display">What Customers Say</h2>
+    </div>
+    <div class="testi-track reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The wedding cake was even more beautiful in person than the pictures. Everyone asked where we got it."</p>
+        <div class="testi-name">— Add a customer name</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Ordered a last-minute birthday cake and it was ready on time, fresh, and delicious."</p>
+        <div class="testi-name">— Add a customer name</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Best red velvet in Entebbe, hands down. We order every anniversary now."</p>
+        <div class="testi-name">— Add a customer name</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <div class="eyebrow">Get in touch</div>
+      <h2 class="display" style="color:var(--plum); font-size:2.1rem; margin-bottom:24px;">Order Your Cake</h2>
+      <ul class="contact-info">
+        <li><span class="ic">📍</span><span>Namulanda, along Entebbe Road</span></li>
+        <li><span class="ic">📞</span><span id="contactPhoneText">0709581690</span></li>
+        <li><span class="ic">✉️</span><span id="contactEmailText">jordanssemwanga12@gmail.com</span></li>
+        <li><span class="ic">f</span><span>Facebook — Cakes by Jose</span></li>
+        <li><span class="ic">@</span><span>Instagram — @cakesbyjose</span></li>
+      </ul>
+      <a class="btn btn-solid" id="waBtn" href="#" target="_blank" rel="noopener">Order on WhatsApp</a>
+    </div>
+    <form id="orderForm" onsubmit="return handleOrder(event)">
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" required placeholder="e.g. Grace Nakato">
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="tel" required placeholder="07XX XXX XXX">
+      </div>
+      <div class="field">
+        <label>Cake Type</label>
+        <select>
+          <option>Birthday Cake</option>
+          <option>Wedding Cake</option>
+          <option>Cupcakes</option>
+          <option>Anniversary Cake</option>
+          <option>Valentine's Cake</option>
+          <option>Velvet Cake</option>
+          <option>Bread</option>
+          <option>Cookies / Biscuits</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Date Needed</label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Details</label>
+        <textarea rows="3" placeholder="Size, flavour, colours, message on cake..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-solid" style="width:100%;">Send Order Enquiry</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">Cakes by Jose</div>
+        <p style="max-width:260px; font-size:.85rem; color:#e3b7cc;">...your home of cake. Namulanda, along Entebbe Road.</p>
+      </div>
+      <div class="foot-social">
+        <a href="tel:0709581690" id="footerCallLink">Call</a>
+        <a href="#" id="footerWaLink" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="#" target="_blank" rel="noopener">Facebook</a>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© <span id="year"></span> Cakes by Jose. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // ======= OWNER CONTACT SETTINGS =======
+  const OWNER_PHONE = "256709581690"; // Updated contact logic
+  const OWNER_EMAIL = "jordanssemwanga12@gmail.com"; // Updated email logic
+  // =======================================
+
+  // ---------- nav ----------
+  document.getElementById('burger').addEventListener('click', ()=>{
+    document.getElementById('navlinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.navlinks a').forEach(a=>{
+    a.addEventListener('click', ()=> document.getElementById('navlinks').classList.remove('open'));
+  });
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- menu data ----------
+  const menuItems = [
+    {name:"Strawberry Drip Cake", cat:"birthday", price:"UGX 90,000", desc:"Vanilla sponge, strawberries, white drip finish.", img:"Rose strawberry.jpg"},
+    {name:"Rose Gold Wedding Tier", cat:"wedding", price:"UGX 450,000", desc:"Two-tier buttercream roses with gold pearls.", img:"Rosegold.jpg"},
+    {name:"Classic Cupcakes", cat:"cupcake", price:"UGX 25,000", desc:"Freshly baked fluffy golden plain cupcakes, perfect for any custom frosting.", img:"bb17c5cc30654c975b05806dd0cd527d.jpg"},
+    {name:"Gabriela Rose Cake", cat:"anniversary", price:"UGX 120,000", desc:"Stunning floral celebration cake with deep purple rose detail.", img:"0f174b221d0103654ecdd483c3eedcb6.jpg"},
+    {name:"Sweetheart Macaron Cake", cat:"valentine", price:"UGX 130,000", desc:"Pink ombre, fresh berries, macarons.", img:"Macron cake.jpg"},
+    {name:"Red Velvet Classic", cat:"velvet", price:"UGX 85,000", desc:"Rich red velvet, cream cheese frosting.", img:"Rose strawberry.jpg"},
+    {name:"Chocolate Drip Birthday", cat:"birthday", price:"UGX 110,000", desc:"Luxurious chocolate ganache drip with loaded treats.", img:"814a5492436364a04e1218cde7ffa14d.jpg"},
+    {name:"Fresh Bread Loaf / Rolls", cat:"bread", price:"UGX 8,000", desc:"Soft, golden daily-baked dinner rolls and bread loaves.", img:"ad2f4fb707fcb4d67a3d116f55902cf9.jpg"},
+    {name:"Butter Cookies (12pc)", cat:"cookie", price:"UGX 15,000", desc:"Crisp, buttery, lightly sweet.", img:"Cupcakes.jpg"},
+  ];
+
+  const menuGrid = document.getElementById('menuGrid');
+  menuItems.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'menu-card show';
+    card.dataset.cat = item.cat;
+    card.innerHTML = `
+      <div class="menu-img">
+        <img src="${item.img}" alt="${item.name}">
+        <div class="swap-hint">Cakes by Jose</div>
+      </div>
+      <div class="menu-body">
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+        <div class="menu-foot">
+          <span class="price">${item.price}</span>
+          <span class="order-mini" data-name="${item.name}">Order this →</span>
+        </div>
+      </div>`;
+    menuGrid.appendChild(card);
+  });
+
+  document.querySelectorAll('.order-mini').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+      const select = document.querySelector('#orderForm select');
+      const name = btn.dataset.name.toLowerCase();
+      for(const opt of select.options){
+        if(name.includes(opt.text.toLowerCase().split(' ')[0].replace(/s$/,''))){
+          select.value = opt.text; break;
+        }
+      }
+    });
+  });
+
+  // filters
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.menu-card').forEach(card=>{
+        card.classList.toggle('show', f==='all' || card.dataset.cat===f);
+      });
+    });
+  });
+
+  // ---------- gallery ----------
+  const galleryPhotos = [
+    { label: "Freshly Baked Golden Cupcakes", url: "bb17c5cc30654c975b05806dd0cd527d.jpg" },
+    { label: "Daily Baked Fresh Soft Bread Rolls", url: "ad2f4fb707fcb4d67a3d116f55902cf9.jpg" },
+    { label: "Signature Loaded Chocolate Drip", url: "814a5492436364a04e1218cde7ffa14d.jpg" },
+    { label: "Gabriela Elegant Purple Floral Cake", url: "0f174b221d0103654ecdd483c3eedcb6.jpg" },
+    { label: "Strawberry drip cake", url: "Rose strawberry.jpg" },
+    { label: "Macaron top cake", url: "Macron cake.jpg" },
+    { label: "Rose gold plaque cake", url: "Rosegold.jpg" }
+  ];
+  const galleryGrid = document.getElementById('galleryGrid');
+  galleryPhotos.forEach(photo=>{
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    div.innerHTML = `<img src="${photo.url}" alt="${photo.label}"><div class="zoom"><span>View ${photo.label}</span></div>`;
+    div.addEventListener('click', ()=>{
+      document.getElementById('lightbox-img').src = photo.url;
+      document.getElementById('lightbox-text').textContent = photo.label;
+      document.getElementById('lightbox').classList.add('open');
+    });
+    galleryGrid.appendChild(div);
+  });
+  document.getElementById('lightbox-close').addEventListener('click', ()=>{
+    document.getElementById('lightbox').classList.remove('open');
+  });
+  document.getElementById('lightbox').addEventListener('click', (e)=>{
+    if(e.target.id === 'lightbox') e.target.classList.remove('open');
+  });
+
+  // ---------- cake builder ----------
+  const colors = [
+    {hex:'#F6C6D9', name:'Blush Pink'},
+    {hex:'#C2185B', name:'Magenta'},
+    {hex:'#5C0E33', name:'Plum'},
+    {hex:'#FFFFFF', name:'White'},
+    {hex:'#C9976B', name:'Rose Gold'},
+    {hex:'#5C3A21', name:'Chocolate'},
+  ];
+  const colorWrap = document.getElementById('colorSwatches');
+  let selectedColor = colors[0];
+  colors.forEach((c,i)=>{
+    const s = document.createElement('div');
+    s.className = 'swatch' + (i===0?' selected':'');
+    s.style.background = c.hex;
+    s.style.boxShadow = c.hex === '#FFFFFF' ? 'inset 0 0 0 1px rgba(0,0,0,.15)' : 'none';
+    s.addEventListener('click', ()=>{
+      document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('selected'));
+      s.classList.add('selected');
+      selectedColor = c;
+      updateCake();
+    });
+    colorWrap.appendChild(s);
+  });
+
+  const tierPrices = {1:60000, 2:120000, 3:200000};
+  let selectedTiers = 1;
+  const tierWrap = document.getElementById('tierChips');
+  [1,2,3].forEach(n=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (n===1?' selected':'');
+    chip.textContent = n + (n>1?' Tiers':' Tier');
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('#tierChips .chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedTiers = n;
+      updateCake();
+    });
+    tierWrap.appendChild(chip);
+  });
+
+  const toppers = [
+    {label:'None', icon:''},
+    {label:'Happy Birthday', icon:'🎂'},
+    {label:'Flowers', icon:'💐'},
+    {label:'Hearts', icon:'💕'},
+    {label:'Number', icon:'🔢'},
+  ];
+  let selectedTopper = toppers[1];
+  const topperWrap = document.getElementById('topperChips');
+  toppers.forEach((t,i)=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (i===1?' selected':'');
+    chip.textContent = t.label;
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('#topperChips .chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedTopper = t;
+      updateCake();
+    });
+    topperWrap.appendChild(chip);
+  });
+
+  function updateCake(){
+    ['tier1','tier2','tier3'].forEach((id,i)=>{
+      const el = document.getElementById(id);
+      el.style.background = selectedColor.hex;
+      el.style.boxShadow = selectedColor.hex === '#FFFFFF' ? 'inset 0 0 0 1px rgba(0,0,0,.1)' : 'none';
+      el.style.display = i < selectedTiers ? 'block' : 'none';
+    });
+    document.getElementById('cakeTopper').textContent = selectedTopper.icon;
+    const price = tierPrices[selectedTiers];
+    document.getElementById('totalPrice').textContent = 'UGX ' + price.toLocaleString();
+  }
+  updateCake();
+
+  document.getElementById('builderOrderBtn').addEventListener('click', ()=>{
+    const ta = document.querySelector('#orderForm textarea');
+    ta.value = `Custom cake: ${selectedTiers} tier(s), ${selectedColor.name} icing, ${selectedTopper.label} topper.`;
+  });
+
+  // ---------- apply owner contact settings ----------
+  document.getElementById('waBtn').href = `https://wa.me/${OWNER_PHONE}`;
+  document.getElementById('footerWaLink').href = `https://wa.me/${OWNER_PHONE}`;
+  document.getElementById('footerCallLink').href = `tel:${OWNER_PHONE}`;
+  document.getElementById('contactEmailText').textContent = OWNER_EMAIL;
+  document.getElementById('contactPhoneText').textContent = "0" + OWNER_PHONE.slice(3);
+
+  // ---------- native share function ----------
+  function shareWebsite() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Cakes by Jose',
+        text: 'Check out beautiful handmade custom cakes from Cakes by Jose!',
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      // Fallback: Copy to clipboard if Web Share API is not supported
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert('Website link copied to your clipboard! You can paste it anywhere to share.');
+    }
+  }
+
+  // ---------- order form ----------
+  function handleOrder(e){
+    e.preventDefault();
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value;
+    const phone = form.querySelector('input[type="tel"]').value;
+    const type = form.querySelector('select').value;
+    const date = form.querySelector('input[type="date"]').value;
+    const details = form.querySelector('textarea').value;
+
+    const summary = `New cake order:\nName: ${name}\nPhone: ${phone}\nCake type: ${type}\nDate needed: ${date || 'Not specified'}\nDetails: ${details}`;
+
+    const waMsg = encodeURIComponent(`Hi Cakes by Jose! I'd like to order:\n${summary}`);
+    window.open(`https://wa.me/${OWNER_PHONE}?text=${waMsg}`, '_blank');
+
+    const emailSubject = encodeURIComponent(`New Cake Order from ${name}`);
+    const emailBody = encodeURIComponent(summary);
+    window.location.href = `mailto:${OWNER_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
+
+    return false;
+  }
+
+  // ---------- scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  }, {threshold:.15});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
